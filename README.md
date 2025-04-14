@@ -8,4 +8,4 @@ When creating a new project you can:
 - Add keyboard shortcuts to keybindings.json to run above tasks (Ctrl+F5 = Run, Ctrl+Shift+B = Build, Ctrl+Shift+C = Check)
 
 How to use:
-CTRL+SHIFT+P -> Create new Rust project
+Command palette -> Create new Rust project
