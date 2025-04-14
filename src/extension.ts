@@ -168,11 +168,11 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
         const addLaunchConfig = await vscode.window.showQuickPick(['Yes', 'No'], {
-            placeHolder: 'Do you want to add a launch configuration that uses the Visual Studio Windows debugger?'
+            placeHolder: 'Do you want to add a launch.json file?'
         });
 
 		if (addLaunchConfig === 'Yes') {
-            const launchConfig = {
+            const launchConfig = os.platform() === 'win32' ? {
                 version: '0.2.0',
                 configurations: [
                     {
@@ -186,7 +186,37 @@ export function activate(context: vscode.ExtensionContext) {
 						"environment": [],
 						"internalConsoleOptions": "openOnSessionStart",
 						"console": "integratedTerminal",
-						"preLaunchTask": "clear terminal",
+						"preLaunchTask": "cargo build",
+                    }
+                ]
+            } :
+            {
+                version: '0.2.0',
+                configurations: [
+                    {
+                        "name": "(gdb) Launch",
+                        "type": "cppdbg",
+                        "request": "launch",
+                        "program": "${workspaceRoot}/target/debug/${workspaceFolderBasename}",
+                        "args": [],
+                        "stopAtEntry": false,
+                        "cwd": "${fileDirname}",
+                        "environment": [],
+                        "externalConsole": false,
+                        "MIMode": "gdb",
+                        "setupCommands": [
+                            {
+                                "description": "Enable pretty-printing for gdb",
+                                "text": "-enable-pretty-printing",
+                                "ignoreFailures": true
+                            },
+                            {
+                                "description": "Set Disassembly Flavor to Intel",
+                                "text": "-gdb-set disassembly-flavor intel",
+                                "ignoreFailures": true
+                            }
+                        ],
+                        "preLaunchTask": "cargo build"
                     }
                 ]
             };
