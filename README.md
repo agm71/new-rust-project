@@ -10,6 +10,3 @@ When creating a new project you can:
 How to use:
 Command palette -> Create new Rust project
 
-# Note
-
-This extension was created specifically for Windows as I primarily use Windows. So it won't work well on other platforms.
